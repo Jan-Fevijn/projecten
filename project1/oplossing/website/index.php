@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         else
         {
-            echo "foutieve gegevens, probeer opnieuw";
+            $fout = "<p>foutieve gegevens, probeer opnieuw</p>";
         }
         
     }
@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div class="col-sm mx-md-n5">
     <form action="index.php" method="POST">
+            <span id='fout'><?php echo $fout ?></span>
             <p><span>Gebruikersnaam: </span><input type="text" id="gebruikersnaam" name="gbrnaam"></input></p>
             <p><span>wachtwoord: </span><input type="password" id="wachtwoord" name="ww"></input></p>
             <p><input type="submit" name="verzenden"></input></p>
