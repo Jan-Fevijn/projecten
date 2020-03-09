@@ -6,8 +6,8 @@
   if (isset($_SESSION["persoonID"])){
   ?>
     <a class="p-2 text-dark" href="overzicht.php">Overzicht</a>
-    <a class="p-2 text-dark" href="#">toevoegen</a>
-    <a class="p-2 text-dark" href="aanpassingen.php">update items</a>
+    <a class="p-2 text-dark" href="aanpassingen.php">toevoegen</a>
+    <a class="p-2 text-dark" href="#">update items</a>
     <a class="btn btn-outline-primary" href="afmelden.php">Afmelden</a>
   <?php 
   }else  {

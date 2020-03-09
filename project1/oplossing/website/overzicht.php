@@ -1,5 +1,19 @@
 <?php 
 include 'config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+  if (isset($_GET["bedrag"])) {
+
+      //controle op correcte gebruikersnaam of wachtwoord
+      $sql = "UPDATE verrichting SET bedrag= " . $_GET["bedrag"]  ." WHERE idverrichting=". $_SESSION["idverrichting"] . "";
+
+      if ($conn->query($sql) === TRUE) {
+          //echo "Succesvol aangepast";
+      } else {
+          echo "fout bij het aanpassen: " . $conn->error;
+      }
+  }
+}
 ?>
 <html>
 <head>
@@ -28,7 +42,7 @@ include 'config.php';
     <tbody>
 
     <?php 
-    $sql = "SELECT * FROM project1.alleinfoverrichtingen where idpersoon = " . $_SESSION["persoonID"] . ";";
+    $sql = "SELECT idverrichting,bedrag,datum,omschrijving FROM alleinfoverrichtingen where idpersoon = " . $_SESSION["persoonID"] . ";";
 
     $result = $conn->query($sql);
 
@@ -37,8 +51,30 @@ include 'config.php';
     ?>
 
       <tr>
-        <th scope="row"></th>
+      <?php
+        if (isset($_GET["idverrichting"])) {
+          if ($_GET["idverrichting"] == $row["idverrichting"]) {
+            $_SESSION["idverrichting"] = $row["idverrichting"];
+        ?>
+        <form action="overzicht.php" name="updatefrm" methode="POST">
+        <th scope="row"><a class="btn btn-outline-primary" onclick="document.forms[0].submit();return false;" href="#">UPDATE</a> </th>
+        <td><input type="text" name="bedrag" value="<?php echo $row["bedrag"]; ?>"></td>
+        </form>
+        <?php 
+          }else{
+            ?>
+            <th scope="row"><a class="btn btn-outline-primary" href="?idverrichting=<?php echo $row["idverrichting"] ?>">Aanpassen</a></th>
+            <td><?php echo $row["bedrag"]; ?></td>
+            <?php
+
+          }
+        }else {
+        ?>
+        <th scope="row"><a class="btn btn-outline-primary" href="?idverrichting=<?php echo $row["idverrichting"] ?>">Aanpassen</a></th>
         <td><?php echo $row["bedrag"]; ?></td>
+        <?php
+        }
+        ?>
         <td><?php echo $row["datum"]; ?></td>
         <td><?php echo $row["omschrijving"]; ?></td>
       </tr>
@@ -50,6 +86,7 @@ include 'config.php';
     </tbody>
   </table>
 </div>
+
 
 </body>
 </html>
